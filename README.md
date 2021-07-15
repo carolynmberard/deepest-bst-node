@@ -101,7 +101,7 @@ const findDeepestDFS = (node) => {
 
 ---
 
-## Solution Code (Breadth First)
+## Solution Code (Breadth First with Queues)
 
 ```javascript
 const findDeepestBFS = (node) => {
@@ -121,11 +121,34 @@ const findDeepestBFS = (node) => {
 
 ---
 
+## Solution Code (Breadth First without Queues)
+
+```javascript
+const findDeepestBFS = (node) => {
+  // we set two arrays, one with our root node, and an empty array for the next level of the BST
+  let currentLevel = [node]
+  let nextLevel = []
+  while (currentLevel[0]) {
+  // we push any children of our current level to our nextLevel array & clear the currentLevel array as we go
+    if(currentLevel[0].left) nextLevel.push(currentLevel[0].left)
+    if(currentLevel[0].right) nextLevel.push(currentLevel[0].right)
+    currentLevel.shift()
+    if(!currentLevel.length) {
+      if(nextLevel.length === 1) return nextLevel[0]
+      currentLevel = nextLevel
+      nextLevel = []
+    }
+  }
+}
+```
+
+---
+
 ## Summary
 
 #### Big O
 
-In both solutions, you must visit every node in the tree.
+In all three solutions, you must visit every node in the tree.
 - Depth First: O(n)
 - Breadth First: O(n)
 
